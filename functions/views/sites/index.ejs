@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sites List</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>List of Sites</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>URL</th>
+                <th>Customer ID</th>
+                <th>Hacks</th>
+            </tr>
+        </thead>
+        <tbody id="sites-list">
+            <!-- Sites will be populated here by JavaScript -->
+        </tbody>
+    </table>
+
+    <script>
+        // Fetch the sites data from the API
+        fetch('/sites')
+            .then(response => response.json())
+            .then(sites => {
+                const sitesList = document.getElementById('sites-list');
+                sites.forEach(site => {
+                    const row = document.createElement('tr');
+
+                    const urlCell = document.createElement('td');
+                    urlCell.textContent = site.url;
+                    row.appendChild(urlCell);
+
+                    const customerIdCell = document.createElement('td');
+                    customerIdCell.textContent = site.customer_id;
+                    row.appendChild(customerIdCell);
+
+                    const hacksCell = document.createElement('td');
+                    const hacksList = document.createElement('ul');
+                    site.hacks.forEach(hack => {
+                        const hackItem = document.createElement('li');
+                        hackItem.textContent = `JavaScript: ${hack.javascript}, CSS: ${hack.css}, Route: ${hack.route}`;
+                        hacksList.appendChild(hackItem);
+                    });
+                    hacksCell.appendChild(hacksList);
+                    row.appendChild(hacksCell);
+
+                    sitesList.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching sites:', error);
+            });
+    </script>
+</body>
+
+</html>

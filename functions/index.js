@@ -37,6 +37,10 @@ app.get('/login', (req, res) => {
     res.render('login');
 });
 
+app.get('/sites/list', (req, res) => {
+    res.render('sites/index');
+});
+
 const sitesRouters = require('./routes/sites');
 app.use('/sites', sitesRouters);
 
