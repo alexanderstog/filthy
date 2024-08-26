@@ -19,12 +19,10 @@ admin.initializeApp({
 
 const authMiddleware = require('./authMiddleware');
 
-
 // Serve the account page, with authentication middleware
 app.get('/account', authMiddleware, (req, res) => {
     res.render('account');
 });
-
 
 // Set up a route to respond to GET requests at the root URL '/'
 app.get('/', (req, res) => {

@@ -1,10 +1,9 @@
 const router = require('express').Router();
-const admin = require('firebase-admin');
 
 const authMiddleware = require('../authMiddleware');
 
 router.get('/', authMiddleware, (req, res) => {
-    return json([]);
+    return res.status(200).json(["here", "are", "some", "sites"]);
 });
 
 module.exports = router;
