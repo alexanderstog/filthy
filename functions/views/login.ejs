@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('head-include') %><!-- Firebase scripts -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+
+    
+
+    <%- include('navbar-include') %>
+
+    <div class="container">
+        <h1>Login with Google</h1>
+        <button id="google-login" onclick="">Sign in with Google</button>
+        <!-- Content here -->
+    </div>
+    
+
+    <script type="module">
+        import { auth } from '/scripts/firebase-init.js';
+        import { GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
+
+        document.getElementById('google-login').addEventListener('click', () => {
+            console.log("hello world clicked google sign un");
+            const provider = new GoogleAuthProvider();
+
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    const user = result.user;
+                    console.log('User Info:', user);
+
+                    // Get the ID token
+                    return user.getIdToken();
+                })
+                .then((idToken) => {
+                    // Set the token in a cookie
+                    document.cookie = `__session=${idToken}; path=/`;
+                    // Redirect to the account page
+                    window.location.href = '/account';
+                })
+                    .catch((error) => {
+                    console.error('Error during sign-in:', error);
+                });
+        });
+    </script>
+</body>
+</html>

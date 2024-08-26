@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('head-include') %><!-- Firebase scripts -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account</title>
+</head>
+<body>
+    <%- include('navbar-include') %>
+
+    <div class="container">
+        <h1>Welcome to Your Account</h1>
+        <div id="user-info">
+            <!-- User information will be dynamically inserted here -->
+        </div>
+        <button id="logout-button">Logout</button>
+    </div>
+
+    <script type="module">
+        import { auth } from '/scripts/firebase-init.js';
+        import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
+
+        // Check if the user is logged in
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is signed in, display their information
+                document.getElementById('user-info').innerHTML = `
+                    <p>Name: ${user.displayName}</p>
+                    <p>Email: ${user.email}</p>
+                `;
+            } else {
+                // User is not signed in, redirect to login page
+                window.location.href = '/login';
+            }
+        });
+
+        // Logout functionality
+        document.getElementById('logout-button').addEventListener('click', () => {
+            signOut(auth).then(() => {
+                window.location.href = '/login';
+            }).catch((error) => {
+                console.error('Error during sign-out:', error);
+            });
+        });
+    </script>
+</body>
+</html>
