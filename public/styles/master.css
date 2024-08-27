@@ -1,0 +1,75 @@
+/* fonts */
+@import url('https://fonts.googleapis.com/css2?family=Afacad:ital,wght@0,400..700;1,400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+
+body {
+    background-color: orange;
+    font-family: "Afacad", sans-serif!important;
+}
+
+
+/* nav */
+.bd-navbar {
+    
+}
+
+
+/*buttons*/
+
+button {
+    padding:5px 20px 5px 20px;
+    border-radius: 6px!important;
+}
+
+#google-login {
+    background-color: white;
+    border-radius: 6px;
+    padding:5px 40px 5px 40px;
+    width:100%;
+}
+
+textarea {
+    width:100%;
+    font-family: "Source Code Pro", monospace;
+    border:none;
+    border-radius: 6px;
+    margin:10px;
+    background-color:#5e5e5e;
+    color:white;
+    padding:10px;
+}
+
+
+/* poo emoji stuff */
+
+
+
+.emoji-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Allow clicks to pass through */
+    overflow: hidden; /* Hide overflowed emojis */
+    z-index: -1; /* Place the emojis behind the textarea */
+}
+
+.emoji {
+    position: absolute;
+    bottom: 0;
+    font-size: 24px;
+    animation: float-up 2s ease-in-out forwards;
+    opacity: 0;
+}
+
+@keyframes float-up {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh); /* Move emoji to the top of the viewport */
+        opacity: 0;
+    }
+}

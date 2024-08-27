@@ -21,6 +21,7 @@ admin.initializeApp({
 
 const checkIfAuthenticated = (req, res, next) => {
     const idToken = req.cookies ? req.cookies.__session : null;
+    console.log("idToken is" + idToken);
 
     if (!idToken) {
         console.log('>>>>>>>>>>>>> No ID token found, redirecting to login');

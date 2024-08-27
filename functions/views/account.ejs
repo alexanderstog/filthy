@@ -8,41 +8,90 @@
 </head>
 <body>
     <%- include('navbar-include') %>
+    <div class="container bd-gutter mt-3 my-md-4 bd-layout">
+        <div class="button-container" style="display: flex; justify-content: flex-end;">
+            <button id="save-button">Save</button>
+        </div>
+    </div>
+    
+    <div class="container bd-gutter mt-3 my-md-4 bd-layout">
+        <div class="emoji-container"></div>
+        <div class="code-input">
+            <textarea id="master-code-input" name="Text1" cols="40" rows="5" style="min-height: 800px; resize: none;"></textarea>
+        </div>
+    </div>
+    
+
 
     <div class="container">
-        <h1>Welcome to Your Account</h1>
-        <div id="user-info">
-            <!-- User information will be dynamically inserted here -->
-        </div>
-        <button id="logout-button">Logout</button>
+        <button id="logout-button" class="hide">Logout</button>
     </div>
 
     <script type="module">
-        import { auth } from '/scripts/firebase-init.js';
-        import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
 
-        // Check if the user is logged in
-        onAuthStateChanged(auth, (user) => {
+        // Initialize Firebase
+        const auth = getAuth();
+        const db = getFirestore();
+
+        // Reference to textarea and save button
+        const textarea = document.getElementById('master-code-input');
+        const saveButton = document.getElementById('save-button');
+
+        // Function to save data
+        async function saveUserData(user) {
+            const userDocRef = doc(db, 'user_data', user.uid);
+            try {
+                await setDoc(userDocRef, { text: textarea.value }, { merge: true });
+                alert('Data saved successfully!');
+            } catch (error) {
+                console.error('Error saving data: ', error);
+                alert('Failed to save data.');
+            }
+        }
+
+        // Function to load user data
+        async function loadUserData(user) {
+            const userDocRef = doc(db, 'user_data', user.uid);
+            try {
+                const docSnap = await getDoc(userDocRef);
+                if (docSnap.exists()) {
+                    textarea.value = docSnap.data().text || ''; // Populate the textarea with the saved data
+                } else {
+                    console.log('No data found for this user.');
+                }
+            } catch (error) {
+                console.error('Error loading data: ', error);
+            }
+        }
+
+        // Save the textarea value when the button is clicked
+        saveButton.addEventListener('click', () => {
+            const user = auth.currentUser;
             if (user) {
-                // User is signed in, display their information
-                document.getElementById('user-info').innerHTML = `
-                    <p>Name: ${user.displayName}</p>
-                    <p>Email: ${user.email}</p>
-                `;
+                saveUserData(user);
             } else {
-                // User is not signed in, redirect to login page
-                window.location.href = '/login';
+                alert('User is not authenticated.');
             }
         });
 
-        // Logout functionality
-        document.getElementById('logout-button').addEventListener('click', () => {
-            signOut(auth).then(() => {
-                window.location.href = '/login';
-            }).catch((error) => {
-                console.error('Error during sign-out:', error);
-            });
+        // Automatically check if the user is authenticated and load their data
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                console.log('User is signed in:', user);
+                loadUserData(user); // Load the user's saved data when the page loads
+            } else {
+                console.log('No user is signed in.');
+                //window.location = "/login?h3"
+                // Optionally, redirect to login page or show a message
+            }
         });
     </script>
+
+
 </body>
+<footer>
+    <%- include('footer-include') %>
+</footer>
 </html>

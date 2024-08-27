@@ -5,20 +5,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <style>
+        /* Flexbox container for centering the card */
+        .center-container {
+            display: flex;
+            justify-content: center;
+            
+           
+        }
+    </style>
 </head>
 <body>
 
-    
-
     <%- include('navbar-include') %>
 
-    <div class="container">
-        <h1>Login with Google</h1>
-        <button id="google-login" onclick="">Sign in with Google</button>
-        <!-- Content here -->
+    <div class="container bd-gutter mt-3 my-md-4 bd-layout center-container">
+        <div class="card" style="width: 24rem;">
+            <div class="card-body">
+                <h1>Create your account.</h1>
+            
+                <div style="margin-bottom: 10px; display: flex; align-items: start;">
+                    <input type="checkbox" id="disclaimer-checkbox" style="margin-right: 10px; margin-top:5px;">
+                    <label for="disclaimer-checkbox" style="margin: 0;">I acknowledge that I'm a piece of sh*t. I realise that by using this product I'm accepting my own inadequacies as an operator.</label>
+                </div>
+            
+                <button id="google-login" disabled>
+                    <img src="/img/goog-icon.png" alt="Google icon" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 8px;">
+                    Sign in with Google
+                </button>
+            </div>
+        </div>
     </div>
     
-
+    <script>
+        // Get the checkbox and button elements
+        const checkbox = document.getElementById('disclaimer-checkbox');
+        const googleLoginButton = document.getElementById('google-login');
+    
+        // Add event listener to checkbox
+        checkbox.addEventListener('change', function() {
+            // Enable the button if the checkbox is checked, otherwise disable it
+            googleLoginButton.disabled = !this.checked;
+        });
+    </script>
+    
     <script type="module">
         import { auth } from '/scripts/firebase-init.js';
         import { GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
@@ -47,4 +77,8 @@
         });
     </script>
 </body>
+<footer>
+    <%- include('footer-include') %>
+
+</footer>
 </html>

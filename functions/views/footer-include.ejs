@@ -1,0 +1,14 @@
+<script type="module">
+    // Import necessary Firebase modules
+    import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
+    import { auth } from '/scripts/firebase-init.js';  // Adjust the path as needed
+
+    document.getElementById('logout-button').addEventListener('click', () => {
+        signOut(auth).then(() => {
+            window.location.href = '/login';
+        }).catch((error) => {
+            console.error('Error during sign-out:', error);
+        });
+    });
+</script>
+<script src="/scripts/textarea-code.js"></script>
