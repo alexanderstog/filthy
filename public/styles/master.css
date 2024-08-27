@@ -13,6 +13,86 @@ body {
     
 }
 
+/* hero */
+
+.hero-cta {
+    margin-bottom: 50px;
+}
+
+.hero-h1 {
+    text-align: center;
+    font-size: 5rem;
+    line-height: 5rem;
+}
+
+.hero-p {
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.hero-i {
+    font-style: italic;
+}
+
+/* hero animation */
+
+.animation-wrapper {
+    position: relative;
+    width:100%;
+    max-width: 600px;
+    height:400px;
+    font-family: "Source Code Pro", monospace;
+    border:none;
+    border-radius: 6px;
+    margin:0 auto;
+    background-color:#f1f1f1;
+    color:#8ca325;
+    padding:10px;
+}
+.typing-container {
+    
+    
+    white-space: nowrap; /* Ensure the text stays on one line */
+    overflow: hidden;
+    border-right: 2px solid black; /* Simulate the cursor */
+    display: inline-block; /* Allow the element to shrink-wrap its content */
+    width: 0; /* Start with 0 width */
+    animation: typing 4s steps(445) forwards, blink-caret 0.75s step-end infinite;
+}
+
+.save-button {
+    position:absolute;
+    bottom:10px;
+    right:10px;
+    width:160px;
+}
+
+
+
+.clicked {
+    
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 65%; }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: black; }
+}
+
+
+
+/* testimonials */
+.testimonial-container {
+    display: flex;
+    gap: 20px; /* Adds space between the cards */
+    justify-content: start; /* Centers the cards horizontally */
+    flex-wrap: wrap; /* Allows the cards to wrap to the next line if there's not enough space */
+    margin: 20px 0; /* Adds some margin to the container */
+}
 
 /*buttons*/
 
@@ -34,8 +114,8 @@ textarea {
     border:none;
     border-radius: 6px;
     margin:10px;
-    background-color:#5e5e5e;
-    color:white;
+    background-color:#f1f1f1;
+    color:#705122;
     padding:10px;
 }
 
@@ -72,4 +152,12 @@ textarea {
         transform: translateY(-100vh); /* Move emoji to the top of the viewport */
         opacity: 0;
     }
+}
+
+
+.center-container {
+    display: flex;
+    justify-content: center;
+    
+   
 }

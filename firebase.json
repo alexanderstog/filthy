@@ -12,6 +12,9 @@
     "database": {
       "port": 9000
     },
+    "auth":{
+      "port":7000
+    },
     "hosting": {
       "port": 5000
     },

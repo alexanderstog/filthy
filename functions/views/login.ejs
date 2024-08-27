@@ -50,18 +50,19 @@
     </script>
     
     <script type="module">
-        import { auth } from '/scripts/firebase-init.js';
-        import { GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
-
+        import { auth, firestore } from '/scripts/firebase-init.js';
+        import { GoogleAuthProvider, connectAuthEmulator, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
+    
+    
         document.getElementById('google-login').addEventListener('click', () => {
-            console.log("hello world clicked google sign un");
+            console.log("Google sign-in button clicked");
             const provider = new GoogleAuthProvider();
-
+    
             signInWithPopup(auth, provider)
                 .then((result) => {
                     const user = result.user;
                     console.log('User Info:', user);
-
+    
                     // Get the ID token
                     return user.getIdToken();
                 })
@@ -71,11 +72,12 @@
                     // Redirect to the account page
                     window.location.href = '/account';
                 })
-                    .catch((error) => {
+                .catch((error) => {
                     console.error('Error during sign-in:', error);
                 });
         });
     </script>
+    
 </body>
 <footer>
     <%- include('footer-include') %>

@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+import { getAuth, connectAuthEmulator } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
+import { getFirestore, connectFirestoreEmulator } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-analytics.js";
 
 
@@ -27,5 +27,11 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const firestore = getFirestore(app);
 const analytics = getAnalytics(app);
+
+if (window.location.hostname === 'localhost') {
+  console.log("Running on localhost, connecting to emulators nowwww...");
+  connectAuthEmulator(auth, 'http://localhost:7000');  // Use your correct port for Auth emulator
+  connectFirestoreEmulator(firestore, 'localhost', 8080);  // Use your correct port for Firestore emulator
+}
 
 export { app, auth, firestore, analytics };

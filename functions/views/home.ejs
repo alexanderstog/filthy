@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('head-include') %><!-- Firebase scripts -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        /* Flexbox container for centering the card */
+       
+    </style>
+</head>
+<body>
+
+    <%- include('navbar-include') %>
+
+    <div class="hero container bd-gutter mt-3 my-md-4 bd-layout">
+        <h1 class="hero-h1">Fix your site <b>without</b> deploying.</h1>
+        <p class="hero-p">Use Filthy's any-language, cloud based IDE and fix your f*ckups <span class="hero-i">FAST.</span></p>
+        <div class="center-container hero-cta">
+            <a href="/login">
+                <button>Create account</button>
+            </a>
+        </div>
+        
+        
+        <div class="container">
+            <div class="row">
+                <div class="animation-wrapper col">
+                    <div id="typing-text" class="typing-container">where url contains homepage, hide .div</div>
+                    <button id="save-button" class="save-button">Save</button>
+                </div>
+                <div class="col">Images of the site changing.</div>
+            </div>
+        </div>
+    </div>
+    <br><br>
+
+    <div class="container mt-3 my-md-4 bd-layout">
+        <h1>Testimonials</h1>
+        <p>Hear what real people, ashamed at their usage have to say.</p>
+        <div class="testimonial-container">
+            <div class="card" style="width: 18rem;">
+                <img src="/img/test1.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Danny</h5>
+                    <p class="card-text">I used to use GTM like a scumbag for things like this. Filthy is much quicker.</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Product Manager, FTSE 200</li>
+                </ul>
+            </div>
+            <div class="card" style="width: 18rem;">
+                <img src="/img/test1.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Rowan</h5>
+                    <p class="card-text">I made my product lead implement Filthy because I got bored of being told things had to wait for a release.</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Impatient CEO</li>
+                </ul>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+    
+    <script>
+        // Get the checkbox and button elements
+        const checkbox = document.getElementById('disclaimer-checkbox');
+        const googleLoginButton = document.getElementById('google-login');
+    
+        // Add event listener to checkbox
+        checkbox.addEventListener('change', function() {
+            // Enable the button if the checkbox is checked, otherwise disable it
+            googleLoginButton.disabled = !this.checked;
+        });
+    </script>
+    
+    
+</body>
+<footer>
+    <%- include('footer-include') %>
+    <script src="/scripts/hero-typer.js"></script>
+
+</footer>
+</html>

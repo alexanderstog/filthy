@@ -49,3 +49,39 @@ document.getElementById('master-code-input').addEventListener('input', () => {
         emojiContainer.removeChild(emoji);
     });
 });
+
+document.addEventListener('keydown', function(event) {
+  if (event.ctrlKey && event.key === 's') {
+      event.preventDefault();  // Prevent the default save behavior
+
+      // Mimic a click on the button with id 'hello'
+      const button = document.getElementById('save-button');
+      if (button) {
+          button.click();  // Trigger a click event on the button
+      }
+  }
+});
+
+// Save the textarea value when the button is clicked
+saveButton.addEventListener('click', () => {
+  console.log("clicked save");
+  const user = auth.currentUser;
+  if (user) {
+      console.log(">>> user is" + user.uid);
+      saveUserData(user);
+  } else {
+      alert('User is not authenticated.');
+  }
+});
+
+// Automatically check if the user is authenticated and load their data
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+      console.log('User is signed in:', user);
+      loadUserData(user); // Load the user's saved data when the page loads
+  } else {
+      console.log('No user is signed in.');
+      //window.location = "/login?h3"
+      // Optionally, redirect to login page or show a message
+  }
+});

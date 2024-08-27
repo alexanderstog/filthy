@@ -28,23 +28,27 @@
     </div>
 
     <script type="module">
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+        import { auth, firestore } from '/scripts/firebase-init.js';
+        import { getAuth, onAuthStateChanged, connectAuthEmulator } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, connectFirestoreEmulator } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
 
-        // Initialize Firebase
-        const auth = getAuth();
-        const db = getFirestore();
+        
 
         // Reference to textarea and save button
         const textarea = document.getElementById('master-code-input');
         const saveButton = document.getElementById('save-button');
 
+        //const db = admin.firestore();
         // Function to save data
         async function saveUserData(user) {
-            const userDocRef = doc(db, 'user_data', user.uid);
+            console.log("saving user data");
+            const userDocRef = doc(firestore, 'user_data', user.uid);
             try {
                 await setDoc(userDocRef, { text: textarea.value }, { merge: true });
-                alert('Data saved successfully!');
+                //alert('Data saved successfully!');
+                document.getElementById('save-button').textContent = "Saved ✅";
+                resetSaveButtonText()
+                
             } catch (error) {
                 console.error('Error saving data: ', error);
                 alert('Failed to save data.');
@@ -53,24 +57,36 @@
 
         // Function to load user data
         async function loadUserData(user) {
-            const userDocRef = doc(db, 'user_data', user.uid);
+            const userDocRef = doc(firestore, 'user_data', user.uid);
+            textarea.value = "Retrieving data...";
             try {
                 const docSnap = await getDoc(userDocRef);
                 if (docSnap.exists()) {
                     textarea.value = docSnap.data().text || ''; // Populate the textarea with the saved data
                 } else {
                     console.log('No data found for this user.');
+                    textarea.value = "";
                 }
             } catch (error) {
                 console.error('Error loading data: ', error);
             }
         }
 
+        function resetSaveButtonText() {
+            setTimeout(function(){
+                document.getElementById('save-button').textContent = "Save";
+            },3000);
+        }
+
         // Save the textarea value when the button is clicked
         saveButton.addEventListener('click', () => {
+            console.log("clicked save");
+            document.getElementById('save-button').textContent = "⏳ Saving...";
             const user = auth.currentUser;
             if (user) {
+                console.log(">>> user is" + user.uid);
                 saveUserData(user);
+                resetSaveButtonText();
             } else {
                 alert('User is not authenticated.');
             }
@@ -93,5 +109,6 @@
 </body>
 <footer>
     <%- include('footer-include') %>
+    <script src="/scripts/textarea-code.js"></script>
 </footer>
 </html>
